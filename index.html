@@ -16,6 +16,14 @@
             margin-top: 100%;
         } */
 
+        .validMsg {
+            color: green;
+        }
+
+        .errorMsg {
+            color: red;
+        }
+
     </style>
 
 </head>
@@ -48,18 +56,16 @@
                 <form>
                     <label for="phone">Phone*</label>
                     <input id="phone" type="tel" required>
-                    <span id="valid-msg" hidden>Valid</span>
-                    <span id="error-msg" hidden></span>
-                    <!-- <input type="button" class="btn btn-primary" value="Verify"> -->
+                    <span id="valid-msg" class="validMsg" hidden>Valid</span>
+                    <span id="error-msg" class="errorMsg" hidden></span>
                 </form>
             </div>
             <div>
                 <label for="email">Email*</label>
                 <input id="email" type="email" required>
             </div>
+            <button type="button" class="btn btn-lg btn-primary" id="next">Next</button>
         </div>
-
-        <button type="button" class="btn btn-lg btn-primary" id="next">Next</button>
 
         <!-- Second part -->
         <div id="second-part" hidden>
@@ -79,6 +85,7 @@
                 <label for="photo">Photo</label>
                 <input type="file" id="photo">
             </div>
+            <button type="button" class="btn btn-lg btn-primary" id="back">Back</button>
         </div>
 
     </div>
@@ -127,19 +134,23 @@
 
 
     /* Переход от первой части к второй части регистрации */
-    document.getElementById("next").addEventListener("click", function () {
+/*     document.getElementById("next").addEventListener("click", function () {
         if (localStorage !== undefined) {
             document.getElementById("first-part").hidden = true;
             document.getElementById("next").hidden = true;
             document.getElementById("second-part").hidden = false;
         } else {
             print("All is empty")
-    }}, false);
+    }}, false); */
 </script>
 
 <!-- Local Storage -->
 <script>
-    myStorage = window.localStorage;
+    var myStorage = window.localStorage,
+        nextButton = document.querySelector("#next"),
+        backButton = document.querySelector("#back"),
+        firstPart = document.querySelector("#first-part"),
+        secondPart = document.querySelector("#second-part");
 
     var firstName = document.querySelector("#first-name"),
         lastName = document.querySelector("#last-name"),
@@ -171,6 +182,31 @@
     email.addEventListener("blur", function () {
         myStorage.setItem('email', email.value);
     })
+
+    /* Переход между первой и второй частью регистрации */
+    nextButton.addEventListener("click", function () {
+        if (myStorage.length !== 6 || errorMsg.hidden == false) {
+            print("Error");
+        } else {
+            firstPart.hidden = true;
+            secondPart.hidden = false;
+        }
+    });
+
+    backButton.addEventListener("click", function() {
+        firstPart.hidden = false;
+        secondPart.hidden = true;
+    });
+    
+    /* Восстановление данных из localStorage */
+    if (myStorage.length !== 0) {
+            firstName.value = myStorage.getItem('firstName')
+            lastName.value = myStorage.getItem('lastName')
+            birthdate.value = myStorage.getItem('birthdate')
+            report.value = myStorage.getItem('report')
+            numberPhone.value = myStorage.getItem('phone')
+            email.value = myStorage.getItem('email')
+        }
 </script>
 
 </body>
