@@ -9,9 +9,8 @@
 
     <style>
 
-        .reg-button {
-            position: absolute;
-            margin: 1% 0 0 1%;
+        .container {
+            max-width: 1000px;
         }
 
     </style>
@@ -20,8 +19,78 @@
 
 <body>
 
-    <div>
-        <button class="reg-button btn btn-lg btn-primary" type="submit" onclick="window.location.href = './index.html'">Registration</button>
+<main>
+    <nav class="navbar navbar-expand bg-light mb-3">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="./index.html">Registration</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active disabled">List of participants</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <form class="col">
+                <div>
+                    <ul id="participants" class="list-group">
+
+                    </ul>
+                </div>
+            </form>
+        </div>
     </div>
+</main>
+
+    <script>
+        var members = document.querySelector("#participants");
+
+        window.addEventListener("DOMContentLoaded",()=>{
+            if (localStorage.length !== 0){
+                savedStorage = JSON.parse(localStorage.getItem('members'))
+
+                if (savedStorage.length >= 1) {
+                    for (id=0;id<savedStorage.length;id++) {
+                        firstName = savedStorage[id]['firstName']
+                        lastName = savedStorage[id]['lastName']
+                        birthdate = savedStorage[id]['birthdate']
+                        report = savedStorage[id]['report']
+                        country = savedStorage[id]['countryName']
+                        dialCode = savedStorage[id]['dialCode']
+                        numberPhone = savedStorage[id]['phone']
+                        email = savedStorage[id]['email']
+
+                        company = savedStorage[id]['company']
+                        position = savedStorage[id]['position']
+                        about = savedStorage[id]['about']
+
+                        var fullName = firstName + " " + lastName
+                        /* var member = "Name: " + fullName + ", birthdate: " + birthdate + ", report subject: " + report + ", country: " + country + ", phone number: (+" + dialCode + ") " + numberPhone + ", email: " + email */
+                        let member = `Name: ${fullName},
+                        birthdate: ${birthdate},
+                        report subject: ${report},
+                        country: ${country}, phone number: (+${dialCode}) ${numberPhone},
+                        email: ${email}`
+                        if (company) {member += `, comapny: ${company}`}
+                        if (position) {member += `, position: ${position}`}
+                        if (about) {member += `, about: ${about}`}
+
+                        var li = document.createElement("li");
+                        li.appendChild(document.createTextNode(member))
+                        li.setAttribute("class", "list-group-item");
+                        members.appendChild(li);
+            }}} else {
+                var li = document.createElement("li");
+                li.appendChild(document.createTextNode("This list is empty."));
+                li.setAttribute('class', 'list-group-item');
+                members.appendChild(li);
+            }
+        })
+    </script>
 
 </body>
