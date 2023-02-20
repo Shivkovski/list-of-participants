@@ -4,24 +4,46 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width initial-scale=1">
     <title>Registration page</title>
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/exacti/floating-labels@latest/floating-labels.min.css" media="screen">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="./node_modules/intl-tel-input/build/js/intlTelInput-jquery.js"></script>
+    <script src="./node_modules/intl-tel-input/build/js/intlTelInput-jquery.min.js"></script>
     <link rel="stylesheet" href="./node_modules/intl-tel-input/build/css/intlTelInput.css">
+    <script src="./node_modules/intl-tel-input/build/js/data.js"></script>
+    <script src="./node_modules/intl-tel-input/build/js/data.min.js"></script>
+    <script src="./node_modules/intl-tel-input/build/js/intlTelInput.min.js"></script>
+
+    <link rel="stylesheet" href="./bootstrap-datepicker-1.9.0-dist/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="./bootstrap-datepicker-1.9.0-dist/css/bootstrap-datepicker.min.css">
+    <script src="./bootstrap-datepicker-1.9.0-dist/js/bootstrap-datepicker.js"></script>
+    <script src="./bootstrap-datepicker-1.9.0-dist/js/bootstrap-datepicker.min.js"></script>
 
     <style>
-
-/*         .alert {
-            margin-top: 100%;
-        } */
-
-        .validMsg {
-            color: green;
+        
+        .iti {
+            width: 100%;
+            height: 100%;
         }
 
-        .errorMsg {
-            color: red;
+        #liveAlertRedirectButton {
+            justify-self: end;
+        }
+
+        #liveAlertPlaceholder {
+            display: grid;
+            align-self: start;
+        }
+
+        .container {
+            max-width: 1000px;
+        }
+
+        #phone {
+            height: calc(3.5rem + calc(var(--bs-border-width) * 2));
         }
 
     </style>
@@ -30,76 +52,175 @@
 
 <body>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-
-    <div>
-
+<main>
+    <nav class="navbar navbar-expand bg-light mb-3">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active disabled">Registration</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./main.html">List of participants</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div id="liveAlertPlaceholder" class="alert d-none mb-3" for=".needs-validation"></div>
+        <div class="row">
+        <form class="needs-validation col" novalidate>
         <!-- First part -->
         <div id="first-part">
-            <div>
-                <label for="first-name">First name*</label>
-                <input type="text" id="first-name" required>
+            <div class="row">
+                <div class="form-floating mb-3 col-6">
+                    <input type="text" id="first-name" placeholder="Astor" class="form-control" required>
+                    <label for="first-name">First name*</label>
+                </div>
+                <div class="form-floating mb-3 col-6">
+                    <input type="text" id="last-name" placeholder="Pyacolla" class="form-control" required>
+                    <label for="last-name">Last name*</label>
+                </div>
             </div>
-            <div>
-                <label for="last-name">Last name*</label>
-                <input type="text" id="last-name" required>
+            <div class="row">
+                <div class="form-floating mb-3 col-6">
+                    <!-- datepicker bootstrap -->
+                    <input type="text" id="birthdate" class="form-control" data-provide="datepicker" placeholder="26/03/2004" required>
+                    <label for="birthdate">Birthdate*</label>
+                </div>
+                <div class="form-floating mb-3 col-6">
+                    <input id="email" type="email" placeholder="name@example.com" class="form-control" required>
+                    <label for="email">Email*</label>
+                </div>
             </div>
-            <div>
-                <label for="birthdate">Birthdate*</label>
-                <input type="date" id="birthdate" required max="2004-12-31">
+            <div class="row">
+                <div class="form-floating mb-3 col-6">
+                    <select id="address-country" class="form-control" required></select>
+                    <label for="address-country">Country*</label>
+                </div>
+                <div class="mb-3 col-6">
+                    <div class="form-floating form-label-group">
+                        <input id="phone" type="tel" class="form-control" required>
+                        <label for="phone">Phone*</label>
+                    </div>
+                </div>
             </div>
-            <div>
-                <label for="report">Report subject*</label>
-                <input type="text" id="report" required>
+            <div class="row">
+                <div class="form-floating mb-3 col-6">
+                    <input type="text" id="report" class="form-control" required>
+                    <label for="report">Report subject*</label>
+                </div>
             </div>
-            <div>
-                <form>
-                    <label for="phone">Phone*</label>
-                    <input id="phone" type="tel" required>
-                    <span id="valid-msg" class="validMsg" hidden>Valid</span>
-                    <span id="error-msg" class="errorMsg" hidden></span>
-                </form>
-            </div>
-            <div>
-                <label for="email">Email*</label>
-                <input id="email" type="email" required>
-            </div>
-            <button type="button" class="btn btn-lg btn-primary" id="next">Next</button>
+            <button type="button" class="btn btn-lg btn-primary mb-3" id="nextButton">Next</button>
         </div>
 
         <!-- Second part -->
         <div id="second-part" hidden>
-            <div>
-                <label for="company">Company</label>
-                <input type="text" id="company">
+            <div class="row">
+                <div class="form-floating mb-3 col-6">
+                    <input type="text" id="company" class="form-control">
+                    <label for="company">Company</label>
+                </div>
+                <div class="form-floating mb-3 col-6">
+                    <input type="text" id="position" class="form-control">
+                    <label for="position">Position</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-floating mb-3 col-6">
+                    <textarea id="about" class="form-control" style="height: 200px"></textarea>
+                    <label for="about">About</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="mb-3 col-6">
+                    <label for="photo" class="form-label">Upload photo</label>
+                    <input type="file" id="photo" class="form-control"> <!-- placeholder -->
+                </div>
             </div>
             <div>
-                <label for="position">Position</label>
-                <input type="text" id="position">
+                <button type="button" class="btn btn-lg btn-primary" id="backButton">Back</button>    <button type="submit" class="btn btn-lg btn-primary" id="submitButton">Submit</button>
             </div>
-            <div>
-                <label for="about">About</label>
-                <input type="text" id="about">
-            </div>
-            <div>
-                <label for="photo">Photo</label>
-                <input type="file" id="photo">
-            </div>
-            <button type="button" class="btn btn-lg btn-primary" id="back">Back</button>
         </div>
-
+        </form>
+        </div>
     </div>
+</main>
 
-    <script src="./node_modules/intl-tel-input/build/js/intlTelInput.js"></script>
+<div hidden><button id="liveAlertRedirectButton" type="button" class="btn btn-primary" onclick='location.href="./main.html"'>Redirect</button></div>
 
-<!-- International number phone -->
+
 <script>
-    var phoneInputField = document.querySelector("#phone"),
-        errorMsg = document.querySelector("#error-msg"),
-        validMsg = document.querySelector("#valid-msg");
 
-    var errorMap = ["Invalid number", "Too short", "Too long"]
+    /* Var's */
+    var countryData = window.intlTelInputGlobals.getCountryData(),
+        phoneInputField = document.querySelector("#phone"),
+        countryDropdown = document.querySelector("#address-country"),
+        liveAlertPlaceholder = document.querySelector("#liveAlertPlaceholder"),
+        liveAlertRedirectButton = document.querySelector("#liveAlertRedirectButton");
 
+    var errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"]
+
+
+    var myStorage = window.localStorage
+        nextButton = document.querySelector("#nextButton"),
+        backButton = document.querySelector("#backButton"),
+        firstPart = document.querySelector("#first-part"),
+        secondPart = document.querySelector("#second-part"),
+        submitButton = document.querySelector("#submitButton");
+
+    /* Functions */
+    function alertClear (liveAlert) {
+        liveAlert.textContent = ""
+        liveAlert.classList.remove("alert-success")
+        liveAlert.classList.remove("alert-danger")
+        liveAlert.classList.add("d-none")
+    };
+
+    function alertSuccess (liveAlert) {
+        liveAlert.innerHTML = "Registration is successful." + liveAlertRedirectButton.outerHTML
+        liveAlert.classList.add("alert-success")
+        liveAlert.classList.remove("d-none")
+    };
+
+    function alertError (liveAlert) {
+        liveAlert.textContent = "Error. Check all fields."
+        liveAlert.classList.add("alert-danger")
+        liveAlert.classList.remove("d-none")
+    };
+
+    function alertSuccessPhone (liveAlert) {
+        liveAlert.innerHTML = "Number phone correct."
+        liveAlert.classList.add("alert-success")
+        liveAlert.classList.remove("d-none")
+        setTimeout(() => {alertClear(liveAlert)}, 3000)
+    };
+
+    function alertErrorPhone (liveAlert, error) {
+        liveAlert.innerHTML = "Error. Check number phone. " + error
+        liveAlert.classList.add("alert-danger")
+        liveAlert.classList.remove("d-none")
+        setTimeout(() => {alertClear(liveAlert)}, 3000)
+    };
+
+    function localStorageUpdate (obj) {
+        members = []
+            if (localStorage.getItem('members') !== null) {
+                members = JSON.parse(localStorage.getItem('members'))
+            }
+            members.push(obj)
+            localStorage.setItem('members', JSON.stringify(members))
+    };
+
+    function localStorageUserUpdate (obj) {
+        userSave = []
+        userSave.push(obj)
+        localStorage.setItem('user', JSON.stringify(userSave))
+    }
+
+
+    /* International number phone */
     var iti = window.intlTelInput(phoneInputField, {
         initialCountry: "auto",
         utilsScript: "./node_modules/intl-tel-input/build/js/utils.js",
@@ -113,100 +234,238 @@
 
     var reset = function () {
         phoneInputField.classList.remove("error");
-        errorMsg.innerHTML = "";
-        errorMsg.hidden = true;
-        validMsg.hidden = true;
+        alertClear(liveAlertPlaceholder);
+    };
+
+    var checkPhone = function () {
+        if (phoneInputField.value.trim()) {
+            if (iti.isValidNumber()) {
+                alertSuccessPhone(liveAlertPlaceholder);
+            } else {
+                phoneInputField.classList.add("error")
+                var errorCode = iti.getValidationError();
+                alertErrorPhone(liveAlertPlaceholder, errorMap[errorCode]);
+            }
+        }
     };
 
     phoneInputField.addEventListener('blur', function () {
         reset();
-        if (phoneInputField.value.trim()) {
-            if (iti.isValidNumber()) {
-                validMsg.hidden = false;
-            } else {
-                phoneInputField.classList.add("error")
-                var errorCode = iti.getValidationError();
-                errorMsg.innerHTML = errorMap[errorCode];
-                errorMsg.hidden = false;
-            }
-        }
-    })
+        checkPhone();
+    });
 
+    /* Country sync */
+    for (var i = 0; i < countryData.length; i++) {
+        var country = countryData[i];
+        var optionNode = document.createElement("option");
+        optionNode.value = country.iso2;
+        var textNode = document.createTextNode(country.name);
+        optionNode.appendChild(textNode);
+        countryDropdown.appendChild(optionNode);
+    }
 
-    /* Переход от первой части к второй части регистрации */
-/*     document.getElementById("next").addEventListener("click", function () {
-        if (localStorage !== undefined) {
-            document.getElementById("first-part").hidden = true;
-            document.getElementById("next").hidden = true;
-            document.getElementById("second-part").hidden = false;
-        } else {
-            print("All is empty")
-    }}, false); */
+    countryDropdown.value = iti.getSelectedCountryData().iso2;
+
+    phoneInputField.addEventListener('countrychange', function(e) {
+        countryDropdown.name = iti.getSelectedCountryData().name;
+        countryDropdown.value = iti.getSelectedCountryData().iso2;
+    });
+
+    countryDropdown.addEventListener('change', function() {
+        iti.setCountry(this.value);
+    });
+
 </script>
 
 <!-- Local Storage -->
 <script>
-    var myStorage = window.localStorage,
-        nextButton = document.querySelector("#next"),
-        backButton = document.querySelector("#back"),
-        firstPart = document.querySelector("#first-part"),
-        secondPart = document.querySelector("#second-part");
-
     var firstName = document.querySelector("#first-name"),
         lastName = document.querySelector("#last-name"),
         birthdate = document.querySelector("#birthdate"),
         report = document.querySelector("#report"),
+        country = document.querySelector("#address-country"),
         numberPhone = document.querySelector("#phone"),
         email = document.querySelector("#email");
 
-    firstName.addEventListener("blur", function () {
-        myStorage.setItem('firstName', firstName.value);
+    var company = document.querySelector("#company"),
+        companyPosition = document.querySelector("#position"),
+        about = document.querySelector("#about"),
+        photo = document.querySelector("#photo");
+    var person = {
+        'firstName': '',
+        'lastName': '',
+        'birthdate': '',
+        'report': '',
+        'country': '',
+        'countryName': '',
+        'dialCode': '',
+        'phone': '',
+        'email': '',
+        'company': '',
+        'position': '',
+        'about': '',
+        /* 'photo': '', */
+    } 
+    var user = person
+
+    firstName.addEventListener("change", function () {
+        person['firstName'] = firstName.value
+        user['firstName'] = firstName.value
+        localStorageUserUpdate(user)
     })
 
-    lastName.addEventListener("blur", function () {
-        myStorage.setItem('lastName', lastName.value);
+    lastName.addEventListener("change", function () {
+        person['lastName'] = lastName.value
+        user['lastName'] = lastName.value
+        localStorageUserUpdate(user)
     })
     
-    birthdate.addEventListener("blur", function () {
-        myStorage.setItem('birthdate', birthdate.value);
+    birthdate.addEventListener("change", function () {
+        person['birthdate'] = birthdate.value
+        user['birthdate'] = birthdate.value
+        localStorageUserUpdate(user)
     })
     
-    report.addEventListener("blur", function () {
-        myStorage.setItem('report', report.value);
+    report.addEventListener("change", function () {
+        person['report'] = report.value
+        user['report'] = report.value
+        localStorageUserUpdate(user)
     })
     
-    numberPhone.addEventListener("blur", function () {
-        myStorage.setItem('phone', numberPhone.value);
-    })
-    
-    email.addEventListener("blur", function () {
-        myStorage.setItem('email', email.value);
+    country.addEventListener("change", function () {
+        person['country'] = country.value
+        person['countryName'] = country.name
+        person['dialCode'] = iti.s.dialCode
+        user['country'] = country.value
+        user['countryName'] = country.name
+        user['dialCode'] = iti.s.dialCode
+        localStorageUserUpdate(user)
     })
 
-    /* Переход между первой и второй частью регистрации */
-    nextButton.addEventListener("click", function () {
-        if (myStorage.length !== 6 || errorMsg.hidden == false) {
-            print("Error");
-        } else {
-            firstPart.hidden = true;
-            secondPart.hidden = false;
-        }
-    });
+    numberPhone.addEventListener("change", function () {
+        person['phone'] = numberPhone.value
+        person['dialCode'] = iti.s.dialCode
+        person['country'] = country.value
+        person['countryName'] = country.name
+        user['phone'] = numberPhone.value
+        user['dialCode'] = iti.s.dialCode
+        user['country'] = country.value
+        user['countryName'] = country.name
+        localStorageUserUpdate(user)
+    })
+    
+    email.addEventListener("change", function () {
+        person['email'] = email.value
+        user['email'] = email.value
+        localStorageUserUpdate(user)
+    })
 
+    company.addEventListener("change", function () {
+        person['company'] = company.value
+        user['company'] = company.value
+        localStorageUserUpdate(user)
+    })
+
+    companyPosition.addEventListener("change", function () {
+        person['position'] = companyPosition.value
+        user['position'] = companyPosition.value
+        localStorageUserUpdate(user)
+    })
+
+    about.addEventListener("change", function () {
+        person['about'] = about.value
+        user['about'] = about.value
+        localStorageUserUpdate(user)
+    })
+
+    /* photo.addEventListener("change", function () {
+        person['photo'] = photo
+    }) */
+
+    /* Transition between the first and second part of registration and alert*/
     backButton.addEventListener("click", function() {
         firstPart.hidden = false;
         secondPart.hidden = true;
     });
-    
-    /* Восстановление данных из localStorage */
-    if (myStorage.length !== 0) {
-            firstName.value = myStorage.getItem('firstName')
-            lastName.value = myStorage.getItem('lastName')
-            birthdate.value = myStorage.getItem('birthdate')
-            report.value = myStorage.getItem('report')
-            numberPhone.value = myStorage.getItem('phone')
-            email.value = myStorage.getItem('email')
-        }
 </script>
 
+<!-- Floating label for intlTelInput -->
+<script>
+    $('.intl-tel-input ~ label').insertAfter('.intl-tel-input input.form-control');
+    $('.intl-tel-input, .iti').find('input.form-control').each(function(index, element) {
+        let label = $(element).parent().find('~ label');
+        $(element).after(label);
+    });
+</script>
+
+<!-- Bootstrap 5 datepicker -->
+<script>
+    $('#birthdate').datepicker({
+        format: 'dd/mm/yyyy',
+        startDate: '-60y',
+        endDate: '-18y'
+    });
+</script>
+
+<!-- Validation and submitting -->
+<script>
+    (() => {
+    'use strict'
+
+    const forms = document.querySelectorAll('.needs-validation')
+
+    Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+            alertError(liveAlertPlaceholder)
+            setTimeout(() => {alertClear(liveAlertPlaceholder)}, 10000)
+        }
+        if (form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+            localStorageUpdate(person)
+            alertClear(liveAlertPlaceholder)
+            alertSuccess(liveAlertPlaceholder)
+            if (user.value) {}
+        }
+    
+        form.classList.add("was-validated")
+
+        }, false)
+        nextButton.addEventListener('click', event => {
+        if (!form.checkValidity()) {
+            alertError(liveAlertPlaceholder)
+            setTimeout(() => {alertClear(liveAlertPlaceholder)}, 5000)
+        }
+        if (form.checkValidity()) {
+            alertClear(liveAlertPlaceholder)
+            firstPart.hidden = true;
+            secondPart.hidden = false;
+        }
+        }, false)
+    })
+    })()
+
+    /* Return data from localStorage */
+    window.addEventListener("DOMContentLoaded", () => {
+        if (localStorage.getItem('user') != null) {
+            userSave = JSON.parse(localStorage.getItem('user'))
+            
+            firstName.value = user['firstName'] = userSave[0]['firstName']
+            lastName.value = user['lastName'] = userSave[0]['lastName']
+            birthdate.value = user['birthdate'] = userSave[0]['birthdate']
+            report.value = user['report'] = userSave[0]['report']
+            country.value = user['country'] = userSave[0]['country']
+            numberPhone.value = user['phone'] = userSave[0]['phone']
+            email.value = user['email'] = userSave[0]['email']
+            company.value = user['company'] = userSave[0]['company']
+            companyPosition.value = user['position'] = userSave[0]['position']
+            about.value = user['about'] = userSave[0]['about']
+            /* photo = userSave[0]['photo'] */
+            iti.setCountry(country.value)
+        }
+    })
+</script>
 </body>
